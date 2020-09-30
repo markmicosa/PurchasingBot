@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import time
+import sys
+import time, selenium
 import colorama
 from colorama import Fore, Style
 from selenium import webdriver
@@ -18,7 +19,6 @@ def details():
     return info
 
 def main():
-
     # Input item info
     print(Fore.MAGENTA + "Choose Category:" + Fore.CYAN + "jackets, shirts, top/sweaters, sweatshirts, pants, shorts, hats, bags, accessories, shoes, skate" + Fore.GREEN)
     category = input()
@@ -30,14 +30,8 @@ def main():
     t0 = time.time()
     info = details()
 
+    item = 'https://www.supremenewyork.com' + getItem(category, name, color)
     browser = webdriver.Chrome('/home/mark/Downloads/chromedriver')
-    check = True
-    while check:
-        try:
-            item = 'https://www.supremenewyork.com' + getItem(category, name, color)
-            check = False
-        except:
-            continue
     browser.get(item)
 
     browser.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
@@ -69,7 +63,8 @@ def main():
 
     t1 = time.time()
     print(t1-t0)
-    chrome_options.add_experimental_option("detach", True)
+
+    time.sleep(7200)
 
 if __name__ == "__main__":
     main()
